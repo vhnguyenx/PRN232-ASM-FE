@@ -1,0 +1,16 @@
+{
+  "debug.node.autoAttach": "on",
+  "debug.javascript.usePreview": true,
+  "debug.javascript.breakOnConditionalError": true,
+  "typescript.preferences.includeSourceMapsInSearchResults": true,
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "javascript.preferences.includeSourceMapsInSearchResults": true,
+  "debug.allowBreakpointsEverywhere": true,
+  "extensions.ignoreRecommendations": false,
+  "typescript.suggest.autoImports": true,
+  "javascript.suggest.autoImports": true,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact"
+  }
+}
