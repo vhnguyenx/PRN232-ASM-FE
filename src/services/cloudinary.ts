@@ -1,7 +1,7 @@
 interface CloudinaryResponse {
   secure_url: string;
   public_id: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export const uploadImageToCloudinary = async (file: File): Promise<string> => {

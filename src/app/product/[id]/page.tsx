@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Edit } from 'lucide-react';
 import { RootState, AppDispatch } from '../../../redux/store';
 import { fetchProductById } from '../../../redux/productsSlice';
@@ -79,7 +80,7 @@ export default function ProductDetail() {
           <div className="text-center">
             <div className="text-6xl mb-4">🔍</div>
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
-            <p className="text-gray-600 mb-6">The product you're looking for doesn't exist or has been removed.</p>
+            <p className="text-gray-600 mb-6">The product you&apos;re looking for doesn&apos;t exist or has been removed.</p>
             <Link
               href="/"
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors"
@@ -110,9 +111,11 @@ export default function ProductDetail() {
           <div className="bg-white rounded-lg border border-gray-200 p-4">
             <div className="aspect-square bg-white rounded-lg flex items-center justify-center overflow-hidden">
               {currentProduct.image ? (
-                <img
+                <Image
                   src={currentProduct.image}
                   alt={currentProduct.name}
+                  width={400}
+                  height={400}
                   className="w-full h-full object-contain"
                 />
               ) : (

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { Product, ProductCreateData, ProductUpdateData } from '../redux/productsSlice';
 
 interface ProductFormProps {
@@ -131,7 +132,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, loading, u
   console.log('🚀 ProductForm sending productData:', productData);
   console.log('📁 imageFile in productData:', productData.imageFile);
 
-    onSubmit(productData as any);
+    onSubmit(productData as ProductCreateData | ProductUpdateData);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -231,9 +232,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, loading, u
           {/* Image Preview */}
           {imagePreview && (
             <div className="relative">
-              <img
+              <Image
                 src={imagePreview}
                 alt="Preview"
+                width={128}
+                height={128}
                 className="w-32 h-32 object-cover rounded-lg border border-gray-300"
               />
               <button

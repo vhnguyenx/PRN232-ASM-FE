@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Edit, Trash2, Eye } from 'lucide-react';
 import { Product } from '../redux/productsSlice';
 
@@ -15,9 +16,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
       <div className="h-48 bg-white-200 flex items-center justify-center">
   {product.image ? (
-    <img
+    <Image
       src={product.image}
       alt={product.name}
+      width={200}
+      height={200}
       className="max-w-full max-h-full object-contain"
     />
   ) : (
