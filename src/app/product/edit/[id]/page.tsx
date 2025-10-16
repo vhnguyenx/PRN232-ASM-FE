@@ -8,6 +8,7 @@ import { ArrowLeft } from 'lucide-react';
 import { RootState, AppDispatch } from '../../../../redux/store';
 import { fetchProductById, updateProduct, ProductUpdateData, ProductCreateData } from '../../../../redux/productsSlice';
 import ProductForm from '../../../../components/ProductForm';
+import LoadingSpinner from '../../../../components/LoadingSpinner';
 
 export default function EditProduct() {
   const dispatch = useDispatch<AppDispatch>();
@@ -37,26 +38,6 @@ export default function EditProduct() {
     }
   };
 
-  if (loading && !currentProduct) {
-    return (
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-300 rounded w-1/4 mb-8"></div>
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <div className="space-y-6">
-              {[...Array(6)].map((_, i) => (
-                <div key={i}>
-                  <div className="h-4 bg-gray-300 rounded w-1/4 mb-2"></div>
-                  <div className="h-10 bg-gray-300 rounded"></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -75,7 +56,13 @@ export default function EditProduct() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-2xl">
+    <>
+      {/* Loading Overlay */}
+      {loading && !currentProduct && (
+        <LoadingSpinner fullScreen message="Loading product details..." />
+      )}
+
+      <div className="container mx-auto px-4 py-8 max-w-2xl">
       <div className="mb-6">
         <Link
           href={`/product/${productId}`}
@@ -98,5 +85,6 @@ export default function EditProduct() {
         />
       </div>
     </div>
+    </>
   );
 }

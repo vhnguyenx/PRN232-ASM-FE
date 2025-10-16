@@ -13,7 +13,7 @@ export default function CreateProduct() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const { loading, uploading } = useSelector((state: RootState) => state.products);
-  debugger;
+ 
   const handleSubmit = async (productData: ProductCreateData) => {
     try {
       console.log(productData);

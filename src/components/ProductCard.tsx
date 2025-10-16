@@ -1,10 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Edit, Trash2, Eye } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { Edit, Trash2, Eye, ShoppingCart, Check } from 'lucide-react';
 import { Product } from '../redux/productsSlice';
+import { addToCart } from '../redux/cartSlice';
+import { AppDispatch } from '../redux/store';
+import { useToast } from './ToastProvider';
 
 interface ProductCardProps {
   product: Product;
@@ -12,6 +16,32 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { showSuccess, showError } = useToast();
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
+
+  const handleAddToCart = async () => {
+    if (product.stock === 0 || isAddingToCart) return;
+
+    setIsAddingToCart(true);
+    try {
+      await dispatch(addToCart({ productId: product.id, quantity: 1 })).unwrap();
+      
+      // Show success state
+      setAddedToCart(true);
+      setTimeout(() => setAddedToCart(false), 2000);
+      
+      showSuccess(`${product.name} added to cart!`);
+      console.log('✅ Added to cart:', product.name);
+    } catch (error) {
+      console.error('❌ Failed to add to cart:', error);
+      showError(`Failed to add to cart: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
       <div className="h-48 bg-white-200 flex items-center justify-center">
@@ -41,11 +71,44 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
           {product.description}
         </p>
         
-        {product.stock !== undefined && (
-          <p className="text-sm text-gray-500 mb-4">
-            Stock: {product.stock}
+        {/* Stock Status - Only show if out of stock */}
+        {product.stock !== undefined && product.stock === 0 && (
+          <p className="text-sm mb-4 text-red-600 font-semibold">
+            Out of Stock
           </p>
         )}
+        
+        {/* Add to Cart Button */}
+        <button
+          onClick={handleAddToCart}
+          disabled={product.stock === 0 || isAddingToCart || addedToCart}
+          className={`w-full mb-4 py-2 px-4 rounded-md font-medium flex items-center justify-center space-x-2 transition-all ${
+            addedToCart
+              ? 'bg-green-600 text-white cursor-default'
+              : product.stock === 0
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : isAddingToCart
+              ? 'bg-blue-400 text-white cursor-wait'
+              : 'bg-blue-600 hover:bg-blue-700 text-white'
+          }`}
+        >
+          {addedToCart ? (
+            <>
+              <Check className="h-5 w-5" />
+              <span>Added to Cart</span>
+            </>
+          ) : isAddingToCart ? (
+            <>
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+              <span>Adding...</span>
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="h-5 w-5" />
+              <span>{product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}</span>
+            </>
+          )}
+        </button>
         
         <div className="flex justify-between items-center">
           <Link

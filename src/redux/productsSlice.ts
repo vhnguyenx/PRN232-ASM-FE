@@ -440,31 +440,6 @@ const productsSlice = createSlice({
       state.hasNextPage = paginated.hasNextPage;
       state.hasPrevPage = paginated.hasPrevPage;
     },
-    
-    // Debug action to add mock products for testing
-    addMockProducts: (state, action: PayloadAction<Product[]>) => {
-      state.allProducts = action.payload;
-      
-      // Apply current filters and pagination
-      const filtered = filterProducts(
-        action.payload,
-        state.searchQuery,
-        state.selectedCategory,
-        state.minPrice,
-        state.maxPrice
-      );
-      
-      const sorted = sortProducts(filtered, state.sortBy, state.sortOrder);
-      const paginated = paginateProducts(sorted, state.currentPage, state.itemsPerPage);
-      
-      state.products = paginated.products;
-      state.totalItems = paginated.totalItems;
-      state.totalPages = paginated.totalPages;
-      state.hasNextPage = paginated.hasNextPage;
-      state.hasPrevPage = paginated.hasPrevPage;
-      state.loading = false;
-      state.error = null;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -638,9 +613,9 @@ const productsSlice = createSlice({
   },
 });
 
-export const {
-  clearCurrentProduct,
-  clearError,
+export const { 
+  clearCurrentProduct, 
+  clearError, 
   setUploading,
   setSearchQuery,
   setSelectedCategory,
@@ -648,7 +623,6 @@ export const {
   setSorting,
   setCurrentPage,
   setItemsPerPage,
-  clearFilters,
-  addMockProducts
+  clearFilters
 } = productsSlice.actions;
 export default productsSlice.reducer;

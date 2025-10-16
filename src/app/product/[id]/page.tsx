@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { ArrowLeft, Edit } from 'lucide-react';
 import { RootState, AppDispatch } from '../../../redux/store';
 import { fetchProductById } from '../../../redux/productsSlice';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function ProductDetail() {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,33 +25,7 @@ export default function ProductDetail() {
   }, [dispatch, productId]);
 
   if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-300 rounded w-1/4 mb-8"></div>
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Image Skeleton */}
-              <div className="bg-white rounded-lg border border-gray-200 p-4">
-                <div className="aspect-square bg-gray-200 rounded-lg"></div>
-              </div>
-              
-              {/* Content Skeleton */}
-              <div className="space-y-4">
-                <div className="h-8 bg-gray-300 rounded w-3/4"></div>
-                <div className="h-6 bg-gray-300 rounded w-1/2"></div>
-                <div className="h-12 bg-gray-300 rounded w-1/3"></div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="h-4 bg-gray-300 rounded w-1/4 mb-2"></div>
-                  <div className="h-20 bg-gray-300 rounded"></div>
-                </div>
-                <div className="h-10 bg-gray-300 rounded w-1/2"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner fullScreen message="Loading product details..." />;
   }
 
   if (error) {
@@ -150,21 +125,13 @@ export default function ProductDetail() {
               </p>
             </div>
             
-            {currentProduct.stock !== undefined && (
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Availability</h3>
-                <p className="text-gray-600">
-                  {currentProduct.stock > 0 ? (
-                    <span className="text-green-600 font-medium flex items-center">
-                      <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                      {currentProduct.stock} items in stock
-                    </span>
-                  ) : (
-                    <span className="text-red-600 font-medium flex items-center">
-                      <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-2"></span>
-                      Out of stock
-                    </span>
-                  )}
+            {/* Only show availability if out of stock */}
+            {currentProduct.stock !== undefined && currentProduct.stock === 0 && (
+              <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                <h3 className="text-lg font-semibold text-red-900 mb-2">Availability</h3>
+                <p className="text-red-600 font-medium flex items-center">
+                  <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                  Out of stock
                 </p>
               </div>
             )}
