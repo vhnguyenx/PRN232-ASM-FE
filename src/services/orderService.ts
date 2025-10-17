@@ -1,5 +1,5 @@
 import axiosClient from './axiosClient';
-import { Order, CreateOrderRequest } from '@/types';
+import { Order, CreateOrderRequest, PayOSPaymentRequest, PayOSPaymentResponse } from '@/types';
 
 export const orderService = {
   createOrder: async (data: CreateOrderRequest): Promise<Order> => {
@@ -16,5 +16,9 @@ export const orderService = {
 
   updatePaymentStatus: async (id: number, paymentStatus: string): Promise<Order> => {
     return axiosClient.put<Order>(`/order/${id}/payment-status`, { paymentStatus }) as unknown as Promise<Order>;
+  },
+
+  createPayOSPayment: async (data: PayOSPaymentRequest): Promise<PayOSPaymentResponse> => {
+    return axiosClient.post<PayOSPaymentResponse>('/PayOSPayment', data) as unknown as Promise<PayOSPaymentResponse>;
   }
 };

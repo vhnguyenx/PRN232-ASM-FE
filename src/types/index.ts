@@ -86,6 +86,25 @@ export interface Order {
   items: OrderItem[];
 }
 
+// PayOS Payment Types
+export interface PayOSPaymentRequest {
+  shippingAddress: string;
+  phone: string;
+  notes?: string;
+  paymentMethod: string;
+}
+
+export interface PayOSPaymentResponse {
+  checkoutUrl: string;
+  vendorQrCode: string;
+  vendorAccountNumber: string;
+  paymentDescription: string;
+  orderCode: number;
+  currency: string;
+  paymentAmount: number;
+  paymentStatus: string;
+}
+
 // Product Types (existing)
 export interface Product {
   id: number;

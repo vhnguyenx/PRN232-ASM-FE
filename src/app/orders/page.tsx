@@ -54,17 +54,13 @@ export default function OrdersPage() {
     );
   }
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
+  const getPaymentStatusColor = (paymentStatus: string) => {
+    switch (paymentStatus.toLowerCase()) {
+      case 'paid':
+        return 'bg-green-100 text-green-800';
       case 'pending':
         return 'bg-yellow-100 text-yellow-800';
-      case 'processing':
-        return 'bg-blue-100 text-blue-800';
-      case 'shipped':
-        return 'bg-purple-100 text-purple-800';
-      case 'delivered':
-        return 'bg-green-100 text-green-800';
-      case 'cancelled':
+      case 'failed':
         return 'bg-red-100 text-red-800';
       default:
         return 'bg-gray-100 text-gray-800';
@@ -86,12 +82,10 @@ export default function OrdersPage() {
                 </p>
               </div>
               <div className="text-right">
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
-                  {order.status}
+                <p className="text-xs text-gray-500 mb-1">Payment Status</p>
+                <span className={`px-3 py-1 rounded-full text-sm font-medium ${getPaymentStatusColor(order.paymentStatus)}`}>
+                  {order.paymentStatus}
                 </span>
-                <p className="text-sm text-gray-600 mt-2">
-                  Payment: <span className="capitalize">{order.paymentStatus}</span>
-                </p>
               </div>
             </div>
             

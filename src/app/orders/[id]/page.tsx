@@ -57,17 +57,13 @@ export default function OrderDetailPage() {
     );
   }
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
+  const getPaymentStatusColor = (paymentStatus: string) => {
+    switch (paymentStatus.toLowerCase()) {
+      case 'paid':
+        return 'bg-green-100 text-green-800';
       case 'pending':
         return 'bg-yellow-100 text-yellow-800';
-      case 'processing':
-        return 'bg-blue-100 text-blue-800';
-      case 'shipped':
-        return 'bg-purple-100 text-purple-800';
-      case 'delivered':
-        return 'bg-green-100 text-green-800';
-      case 'cancelled':
+      case 'failed':
         return 'bg-red-100 text-red-800';
       default:
         return 'bg-gray-100 text-gray-800';
@@ -88,16 +84,11 @@ export default function OrderDetailPage() {
       
       <div className="bg-white rounded-lg shadow p-6">
         {/* Order Header */}
-        <div className="flex justify-between items-start mb-6 border-b pb-4">
-          <div>
-            <h1 className="text-2xl font-bold">Order #{order.id}</h1>
-            <p className="text-gray-600">
-              Placed on {new Date(order.createdAt).toLocaleString()}
-            </p>
-          </div>
-          <span className={`px-4 py-2 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
-            {order.status}
-          </span>
+        <div className="mb-6 border-b pb-4">
+          <h1 className="text-2xl font-bold">Order #{order.id}</h1>
+          <p className="text-gray-600">
+            Placed on {new Date(order.createdAt).toLocaleString()}
+          </p>
         </div>
         
         {/* Shipping Information */}
@@ -122,13 +113,16 @@ export default function OrderDetailPage() {
         <div className="mb-6">
           <h2 className="text-lg font-semibold mb-3">Payment Information</h2>
           <div className="bg-gray-50 rounded-lg p-4">
-            <p className="mb-2">
-              <span className="font-medium">Method:</span> {order.paymentMethod}
-            </p>
-            <p>
-              <span className="font-medium">Status:</span>{' '}
-              <span className="capitalize">{order.paymentStatus}</span>
-            </p>
+            <div className="flex justify-between items-center mb-3">
+              <span className="font-medium">Method:</span>
+              <span>{order.paymentMethod}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="font-medium">Payment Status:</span>
+              <span className={`px-3 py-1 rounded-full text-sm font-medium ${getPaymentStatusColor(order.paymentStatus)}`}>
+                {order.paymentStatus}
+              </span>
+            </div>
           </div>
         </div>
         

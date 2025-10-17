@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import Navbar from '../components/Navbar';
+import AuthProvider from '../components/AuthProvider';
 import { ToastProvider } from '../components/ToastProvider';
 import "./globals.css";
 
@@ -26,12 +27,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Provider store={store}>
-          <ToastProvider>
-            <Navbar />
-            <main className="pt-16 min-h-screen bg-gray-50">
-              {children}
-            </main>
-          </ToastProvider>
+          <AuthProvider>
+            <ToastProvider>
+              <Navbar />
+              <main className="pt-16 min-h-screen bg-gray-50">
+                {children}
+              </main>
+            </ToastProvider>
+          </AuthProvider>
         </Provider>
       </body>
     </html>

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/redux/store';
 import { Package, Plus, ShoppingCart, User, LogOut, ShoppingBag, Menu, X } from 'lucide-react';
-import { logout, loadUserFromStorage } from '@/redux/authSlice';
+import { logout } from '@/redux/authSlice';
 import { fetchCart } from '@/redux/cartSlice';
 
 const Navbar = () => {
@@ -16,10 +16,6 @@ const Navbar = () => {
   const { cart } = useSelector((state: RootState) => state.cart);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-
-  useEffect(() => {
-    dispatch(loadUserFromStorage());
-  }, [dispatch]);
 
   useEffect(() => {
     if (isAuthenticated) {
