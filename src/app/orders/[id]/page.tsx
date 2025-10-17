@@ -146,11 +146,11 @@ export default function OrderDetailPage() {
                 <div className="flex-1">
                   <h3 className="font-medium">{item.productName}</h3>
                   <p className="text-gray-600">
-                    ${item.price.toFixed(2)} × {item.quantity}
+                    {item.price.toFixed(2)} VND × {item.quantity}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="font-bold">${item.subtotal.toFixed(2)}</p>
+                  <p className="font-bold">{item.subtotal.toFixed(2)} VND</p>
                 </div>
               </div>
             ))}
@@ -161,7 +161,7 @@ export default function OrderDetailPage() {
         <div className="border-t pt-4">
           <div className="flex justify-between items-center">
             <span className="text-lg font-semibold">Total Amount</span>
-            <span className="text-2xl font-bold">${order.totalAmount.toFixed(2)}</span>
+            <span className="text-2xl font-bold">{order.totalAmount.toFixed(2)} VND</span>
           </div>
         </div>
       </div>

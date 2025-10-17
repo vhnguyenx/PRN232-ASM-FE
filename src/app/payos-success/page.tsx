@@ -135,7 +135,7 @@ function PayOSSuccessContent() {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Total Amount:</span>
-                <span className="font-medium">${order.totalAmount.toFixed(2)}</span>
+                <span className="font-medium">{order.totalAmount.toFixed(2)} VND</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Payment Method:</span>
@@ -173,7 +173,7 @@ function PayOSSuccessContent() {
                       </div>
                     </div>
                     <p className="font-medium">
-                      ${item.subtotal?.toFixed(2) || '0.00'}
+                      {item.subtotal?.toFixed(2) || '0.00'} VND
                     </p>
                   </div>
                 ))}

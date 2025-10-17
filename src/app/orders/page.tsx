@@ -107,10 +107,10 @@ export default function OrdersPage() {
                   <div className="flex-1">
                     <p className="font-medium">{item.productName}</p>
                     <p className="text-sm text-gray-600">
-                      Qty: {item.quantity} × ${item.price.toFixed(2)}
+                      Qty: {item.quantity} × {item.price.toFixed(2)} VND
                     </p>
                   </div>
-                  <p className="font-medium">${item.subtotal.toFixed(2)}</p>
+                  <p className="font-medium">{item.subtotal.toFixed(2)} VND</p>
                 </div>
               ))}
               {order.items.length > 3 && (
@@ -124,7 +124,7 @@ export default function OrdersPage() {
             <div className="flex justify-between items-center border-t pt-4">
               <div>
                 <p className="text-sm text-gray-600">Total Amount</p>
-                <p className="text-xl font-bold">${order.totalAmount.toFixed(2)}</p>
+                <p className="text-xl font-bold">{order.totalAmount.toFixed(2)} VND</p>
               </div>
               <Link
                 href={`/orders/${order.id}`}

@@ -116,7 +116,7 @@ export default function ProductDetail() {
             </div>
             
             <div className="text-4xl font-bold text-blue-600">
-              ${currentProduct.price.toFixed(2)}
+              {currentProduct.price.toFixed(2)} VND
             </div>
             
             <div className="bg-gray-50 p-4 rounded-lg">

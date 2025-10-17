@@ -70,7 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
         </h3>
         
         <p className="text-2xl font-bold text-blue-600 mb-2">
-          ${product.price.toFixed(2)}
+          {product.price.toFixed(2)} VND
         </p>
         
         <p className="text-gray-600 text-sm mb-4 line-clamp-2">

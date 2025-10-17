@@ -121,19 +121,19 @@ export default function CheckoutPage() {
                       <div>
                         <p className="font-medium">{item.productName}</p>
                         <p className="text-sm text-gray-600">
-                          ${item.productPrice.toFixed(2)} × {item.quantity}
+                          {item.productPrice.toFixed(2)} VND × {item.quantity}
                         </p>
                       </div>
                     </div>
                     <p className="font-medium">
-                      ${item.subtotal.toFixed(2)}
+                      {item.subtotal.toFixed(2)} VND
                     </p>
                   </div>
                 ))}
                 <div className="border-t pt-4">
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
-                    <span>${cart.totalAmount.toFixed(2)}</span>
+                    <span>{cart.totalAmount.toFixed(2)} VND</span>
                   </div>
                 </div>
               </div>

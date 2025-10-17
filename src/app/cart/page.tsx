@@ -144,7 +144,7 @@ export default function CartPage() {
                   
                   <div className="flex items-center gap-4 mb-3">
                     <p className="text-lg font-medium text-blue-600">
-                      ${item.productPrice.toFixed(2)} <span className="text-sm text-gray-500">each</span>
+                      {item.productPrice.toFixed(2)} VND <span className="text-sm text-gray-500">each</span>
                     </p>
                   </div>
                   
@@ -193,13 +193,13 @@ export default function CartPage() {
                   <div className="text-right">
                     <p className="text-sm text-gray-500 mb-1">Subtotal</p>
                     <p className="font-bold text-2xl text-gray-900">
-                      ${item.subtotal.toFixed(2)}
+                      {item.subtotal.toFixed(2)} VND
                     </p>
                   </div>
                   
                   {item.quantity > 1 && (
                     <p className="text-xs text-gray-500">
-                      ${item.productPrice.toFixed(2)} × {item.quantity}
+                      {item.productPrice.toFixed(2)} VND × {item.quantity}
                     </p>
                   )}
                 </div>
@@ -217,7 +217,7 @@ export default function CartPage() {
             <div className="space-y-3 mb-6">
               <div className="flex justify-between text-gray-600">
                 <span>Subtotal ({cart.totalItems} {cart.totalItems === 1 ? 'item' : 'items'})</span>
-                <span className="font-medium">${cart.totalAmount.toFixed(2)}</span>
+                <span className="font-medium">{cart.totalAmount.toFixed(2)} VND</span>
               </div>
               
               <div className="flex justify-between text-gray-600">
@@ -230,7 +230,7 @@ export default function CartPage() {
                   <span className="text-lg font-bold text-gray-900">Total</span>
                   <div className="text-right">
                     <p className="text-2xl font-bold text-blue-600">
-                      ${cart.totalAmount.toFixed(2)}
+                      {cart.totalAmount.toFixed(2)} VND
                     </p>
                   </div>
                 </div>

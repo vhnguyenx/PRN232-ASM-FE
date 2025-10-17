@@ -124,7 +124,7 @@ function PayOSCancelContent() {
             <div className="flex justify-between py-2 border-b border-gray-200">
               <span className="text-gray-600">Total Amount:</span>
               <span className="font-semibold text-gray-900">
-                ${order.totalAmount?.toFixed(2) || '0.00'}
+                {order.totalAmount?.toFixed(2) || '0.00'} VND
               </span>
             </div>
             <div className="flex justify-between py-2">
@@ -157,11 +157,11 @@ function PayOSCancelContent() {
                       {item.productName || 'Product'}
                     </p>
                     <p className="text-sm text-gray-500">
-                      Quantity: {item.quantity} × ${item.price?.toFixed(2) || '0.00'}
+                      Quantity: {item.quantity} × {item.price?.toFixed(2) || '0.00'} VND
                     </p>
                   </div>
                   <div className="text-sm font-semibold text-gray-900">
-                    ${item.subtotal?.toFixed(2) || '0.00'}
+                    {item.subtotal?.toFixed(2) || '0.00'} VND
                   </div>
                 </div>
               ))}

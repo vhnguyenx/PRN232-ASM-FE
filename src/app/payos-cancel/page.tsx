@@ -133,7 +133,7 @@ function PayOSCancelContent() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Amount:</span>
-                  <span className="font-medium">${order.totalAmount?.toFixed(2) || '0.00'}</span>
+                  <span className="font-medium">{order.totalAmount?.toFixed(2) || '0.00'} VND</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Status:</span>
