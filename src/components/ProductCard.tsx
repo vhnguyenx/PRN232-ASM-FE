@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Edit, Trash2, Eye, ShoppingCart, Check } from 'lucide-react';
 import { Product } from '../redux/productsSlice';
 import { addToCart } from '../redux/cartSlice';
-import { AppDispatch } from '../redux/store';
+import { AppDispatch, RootState } from '../redux/store';
 import { useToast } from './ToastProvider';
 
 interface ProductCardProps {
@@ -18,10 +18,16 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { showSuccess, showError } = useToast();
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
 
   const handleAddToCart = async () => {
+    if (!isAuthenticated) {
+      showError('Please login to add items to cart');
+      return;
+    }
+    
     if (product.stock === 0 || isAddingToCart) return;
 
     setIsAddingToCart(true);
@@ -119,21 +125,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
             <span>View</span>
           </Link>
           
-          <div className="flex space-x-2">
-            <Link
-              href={`/product/edit/${product.id}`}
-              className="bg-blue-100 hover:bg-blue-200 text-blue-700 p-2 rounded-md transition-colors"
-            >
-              <Edit className="h-4 w-4" />
-            </Link>
-            
-            <button
-              onClick={() => onDelete(product.id)}
-              className="bg-red-100 hover:bg-red-200 text-red-700 p-2 rounded-md transition-colors"
-            >
-              <Trash2 className="h-4 w-4" />
-            </button>
-          </div>
+          {/* Only show edit/delete buttons when authenticated */}
+          {isAuthenticated && (
+            <div className="flex space-x-2">
+              <Link
+                href={`/product/edit/${product.id}`}
+                className="bg-blue-100 hover:bg-blue-200 text-blue-700 p-2 rounded-md transition-colors"
+              >
+                <Edit className="h-4 w-4" />
+              </Link>
+              
+              <button
+                onClick={() => onDelete(product.id)}
+                className="bg-red-100 hover:bg-red-200 text-red-700 p-2 rounded-md transition-colors"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

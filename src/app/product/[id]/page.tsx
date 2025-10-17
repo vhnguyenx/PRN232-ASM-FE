@@ -17,6 +17,7 @@ export default function ProductDetail() {
   const productId = Number(params.id);
   
   const { currentProduct, loading, error } = useSelector((state: RootState) => state.products);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (productId) {
@@ -137,13 +138,16 @@ export default function ProductDetail() {
             )}
             
             <div className="flex space-x-4 pt-4">
-              <Link
-                href={`/product/edit/${currentProduct.id}`}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md flex items-center space-x-2 transition-colors shadow-md hover:shadow-lg"
-              >
-                <Edit className="h-4 w-4" />
-                <span>Edit Product</span>
-              </Link>
+              {/* Only show edit button when authenticated */}
+              {isAuthenticated && (
+                <Link
+                  href={`/product/edit/${currentProduct.id}`}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md flex items-center space-x-2 transition-colors shadow-md hover:shadow-lg"
+                >
+                  <Edit className="h-4 w-4" />
+                  <span>Edit Product</span>
+                </Link>
+              )}
               
               <Link
                 href="/"
