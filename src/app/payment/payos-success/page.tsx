@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { orderService } from '@/services/orderService';
 import { Order } from '@/types';
 
 function PayOSSuccessContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
+  // const router = useRouter(); // Removed unused variable
   
   const code = searchParams.get('code');
   const paymentId = searchParams.get('id');

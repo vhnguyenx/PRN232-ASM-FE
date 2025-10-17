@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
+import { OrderItem } from '@/types';
 import Link from 'next/link';
 import { orderService } from '@/services/orderService';
 import { Order } from '@/types';
@@ -9,7 +11,7 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 
 function PayOSSuccessContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
+  // const router = useRouter(); // Removed unused variable
   
   const code = searchParams.get('code');
   const paymentId = searchParams.get('id');
@@ -151,13 +153,15 @@ function PayOSSuccessContent() {
             <div className="bg-white rounded-lg shadow p-6 mb-6">
               <h2 className="text-xl font-semibold mb-4">Order Items</h2>
               <div className="space-y-4">
-                {order.items.map((item: any) => (
-                  <div key={item.id} className="flex items-center justify-between gap-4">
+                {order.items.map((item: OrderItem, idx: number) => (
+                  <div key={idx} className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
                       {item.productImage && (
-                        <img
+                        <Image
                           src={item.productImage}
-                          alt={item.productName}
+                          alt={item.productName || 'Product'}
+                          width={56}
+                          height={56}
                           className="w-14 h-14 object-cover rounded-md border"
                         />
                       )}

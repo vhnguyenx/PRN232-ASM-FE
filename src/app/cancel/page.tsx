@@ -6,11 +6,12 @@ import Link from 'next/link';
 import { orderService } from '@/services/orderService';
 import { Order } from '@/types';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import Image from 'next/image';
+import { OrderItem } from '@/types';
 
 function PayOSCancelContent() {
   const searchParams = useSearchParams();
   
-  const code = searchParams.get('code');
   const paymentId = searchParams.get('id');
   const cancel = searchParams.get('cancel');
   const status = searchParams.get('status');
@@ -140,12 +141,14 @@ function PayOSCancelContent() {
           <div className="bg-white rounded-lg shadow-md p-8 mb-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Items</h2>
             <div className="space-y-4">
-              {order.items.map((item: any) => (
-                <div key={item.id} className="flex items-center space-x-4 py-3 border-b border-gray-200 last:border-0">
+              {order.items.map((item: OrderItem, idx: number) => (
+                <div key={idx} className="flex items-center space-x-4 py-3 border-b border-gray-200 last:border-0">
                   {item.productImage && (
-                    <img
+                    <Image
                       src={item.productImage}
-                      alt={item.productName}
+                      alt={item.productName || 'Product'}
+                      width={64}
+                      height={64}
                       className="w-16 h-16 object-cover rounded-md"
                     />
                   )}
@@ -154,7 +157,7 @@ function PayOSCancelContent() {
                       {item.productName || 'Product'}
                     </p>
                     <p className="text-sm text-gray-500">
-                      Quantity: {item.quantity} × ${item.productPrice?.toFixed(2) || '0.00'}
+                      Quantity: {item.quantity} × ${item.price?.toFixed(2) || '0.00'}
                     </p>
                   </div>
                   <div className="text-sm font-semibold text-gray-900">

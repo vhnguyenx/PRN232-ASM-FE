@@ -8,6 +8,7 @@ import { fetchCart } from '@/redux/cartSlice';
 import { orderService } from '@/services/orderService';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import LoadingButton from '@/components/LoadingButton';
+import Image from 'next/image';
 
 export default function CheckoutPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -109,9 +110,11 @@ export default function CheckoutPage() {
                   <div key={item.id} className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
                       {item.productImage && (
-                        <img
+                        <Image
                           src={item.productImage}
                           alt={item.productName}
+                          width={56}
+                          height={56}
                           className="w-14 h-14 object-cover rounded-md border"
                         />
                       )}
