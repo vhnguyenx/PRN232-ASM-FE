@@ -51,11 +51,6 @@ export default function CheckoutPage() {
         paymentMethod: 'PayOS',
       });
       
-      // Store orderCode to orderId mapping in sessionStorage for later retrieval
-      if (paymentData.orderCode) {
-        sessionStorage.setItem(`orderCode_${paymentData.orderCode}`, 'pending');
-      }
-      
       // Redirect to PayOS checkout page
       if (paymentData.checkoutUrl) {
         window.location.href = paymentData.checkoutUrl;
@@ -111,12 +106,21 @@ export default function CheckoutPage() {
             <div className="bg-white rounded-lg shadow p-6">
               <div className="space-y-4">
                 {cart.items.map((item) => (
-                  <div key={item.id} className="flex justify-between">
-                    <div>
-                      <p className="font-medium">{item.productName}</p>
-                      <p className="text-sm text-gray-600">
-                        ${item.productPrice.toFixed(2)} × {item.quantity}
-                      </p>
+                  <div key={item.id} className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      {item.productImage && (
+                        <img
+                          src={item.productImage}
+                          alt={item.productName}
+                          className="w-14 h-14 object-cover rounded-md border"
+                        />
+                      )}
+                      <div>
+                        <p className="font-medium">{item.productName}</p>
+                        <p className="text-sm text-gray-600">
+                          ${item.productPrice.toFixed(2)} × {item.quantity}
+                        </p>
+                      </div>
                     </div>
                     <p className="font-medium">
                       ${item.subtotal.toFixed(2)}

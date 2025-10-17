@@ -61,7 +61,7 @@ const Navbar = () => {
                 >
                   <ShoppingCart className="h-6 w-6" />
                   {cartItemCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" suppressHydrationWarning>
                       {cartItemCount}
                     </span>
                   )}
@@ -74,7 +74,7 @@ const Navbar = () => {
                     className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                   >
                     <User className="h-5 w-5" />
-                    <span>{user?.fullName || user?.email}</span>
+                    <span suppressHydrationWarning>{user?.fullName || user?.email}</span>
                   </button>
 
                   {showUserMenu && (
@@ -157,7 +157,7 @@ const Navbar = () => {
                 >
                   <span>Cart</span>
                   {cartItemCount > 0 && (
-                    <span className="bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" suppressHydrationWarning>
                       {cartItemCount}
                     </span>
                   )}

@@ -32,14 +32,9 @@ export default function CartPage() {
       .catch((error) => console.error('❌ Failed to load cart:', error));
   }, [dispatch, isAuthenticated, router]);
 
-  const handleQuantityChange = async (id: number, newQuantity: number, maxStock: number) => {
+  const handleQuantityChange = async (id: number, newQuantity: number) => {
     if (newQuantity < 1) {
       alert('Quantity cannot be less than 1');
-      return;
-    }
-    
-    if (newQuantity > maxStock) {
-      alert(`Cannot exceed available stock (${maxStock})`);
       return;
     }
     
@@ -151,19 +146,13 @@ export default function CartPage() {
                     <p className="text-lg font-medium text-blue-600">
                       ${item.productPrice.toFixed(2)} <span className="text-sm text-gray-500">each</span>
                     </p>
-                    {/* Only show if out of stock */}
-                    {item.stock === 0 && (
-                      <p className="text-sm text-red-600 font-semibold">
-                        Out of stock
-                      </p>
-                    )}
                   </div>
                   
                   {/* Quantity Controls */}
                   <div className="flex items-center gap-4">
                     <div className="flex items-center border-2 border-gray-300 rounded-lg overflow-hidden">
                       <button
-                        onClick={() => handleQuantityChange(item.id, item.quantity - 1, item.stock)}
+                        onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
                         className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         disabled={item.quantity <= 1 || isUpdating}
                         title="Decrease quantity"
@@ -180,9 +169,9 @@ export default function CartPage() {
                       </span>
                       
                       <button
-                        onClick={() => handleQuantityChange(item.id, item.quantity + 1, item.stock)}
+                        onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
                         className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        disabled={item.quantity >= item.stock || isUpdating}
+                        disabled={isUpdating}
                         title="Increase quantity"
                       >
                         +
@@ -236,19 +225,13 @@ export default function CartPage() {
                 <span className="text-green-600 font-medium">FREE</span>
               </div>
               
-              <div className="flex justify-between text-gray-600">
-                <span>Tax (estimated)</span>
-                <span className="font-medium">${(cart.totalAmount * 0.1).toFixed(2)}</span>
-              </div>
-              
               <div className="border-t-2 pt-3 mt-3">
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-bold text-gray-900">Total</span>
                   <div className="text-right">
                     <p className="text-2xl font-bold text-blue-600">
-                      ${(cart.totalAmount * 1.1).toFixed(2)}
+                      ${cart.totalAmount.toFixed(2)}
                     </p>
-                    <p className="text-xs text-gray-500">Including tax</p>
                   </div>
                 </div>
               </div>

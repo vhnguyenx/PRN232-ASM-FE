@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { orderService } from '@/services/orderService';
 import { Order } from '@/types';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 function PayOSSuccessContent() {
   const searchParams = useSearchParams();
@@ -54,14 +55,7 @@ function PayOSSuccessContent() {
   }, [code, cancel, status, orderCode]);
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Verifying payment...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner fullScreen message="Verifying payment..." />;
   }
 
   if (error || !order) {
@@ -152,6 +146,37 @@ function PayOSSuccessContent() {
             </div>
           </div>
           
+          {/* Order Items Section */}
+          {order.items && order.items.length > 0 && (
+            <div className="bg-white rounded-lg shadow p-6 mb-6">
+              <h2 className="text-xl font-semibold mb-4">Order Items</h2>
+              <div className="space-y-4">
+                {order.items.map((item: any) => (
+                  <div key={item.id} className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      {item.productImage && (
+                        <img
+                          src={item.productImage}
+                          alt={item.productName}
+                          className="w-14 h-14 object-cover rounded-md border"
+                        />
+                      )}
+                      <div>
+                        <p className="font-medium">{item.productName}</p>
+                        <p className="text-sm text-gray-600">
+                          Quantity: {item.quantity}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="font-medium">
+                      ${item.subtotal?.toFixed(2) || '0.00'}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Action Buttons */}
           <div className="space-y-3">
             <Link
@@ -181,14 +206,7 @@ function PayOSSuccessContent() {
 
 export default function PayOSSuccessPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    }>
+    <Suspense fallback={<LoadingSpinner fullScreen message="Loading..." />}>
       <PayOSSuccessContent />
     </Suspense>
   );
